@@ -6,7 +6,11 @@ import router from "./router";
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 Vue.use(ElementUI);
-
+//import VueResource from "vue-resource";
+//Vue.use(VueResource);
+import axios from "axios"
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */

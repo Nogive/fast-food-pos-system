@@ -60,6 +60,9 @@
                   <el-button type="warning" icon="el-icon-edit-outline">挂单</el-button>
                   <el-button type="danger" icon="el-icon-delete" >删除</el-button>
                   <el-button type="success" icon="el-icon-success" >结账</el-button>
+                  <el-button type="default" @click="onRegister">注册</el-button>
+                  <el-button type="default" @click="logIn">登录</el-button>
+                  <el-button type="default" @click="onValid">验证登录过期</el-button>
                 </el-row>   
               </el-tab-pane>
               <el-tab-pane label="挂单">
@@ -153,7 +156,7 @@
   </div>
 </template>
 <script>
-import axios from "axios"
+import qs from 'qs';
 export default {
   name:'Home',
   data(){
@@ -234,16 +237,18 @@ export default {
       ],
       type1Goods:[],
       type2Goods:[],
-      type3Goods:[]
+      type3Goods:[],
+      type:'',
+      token:''
     }
   },
   created(){
-    axios.get('http://jspang.com/DemoApi/oftenGoods.php').then(res=>{
+    this.$http.get('http://jspang.com/DemoApi/oftenGoods.php').then(res=>{
       this.oftenGoods=res.data;
     },err=>{
       console.log(err);
     });
-    axios.get('http://jspang.com/DemoApi/typeGoods.php')
+    this.$http.get('http://jspang.com/DemoApi/typeGoods.php')
     .then(response=>{
         this.type0Goods=response.data[0];
         this.type1Goods=response.data[1];
@@ -254,6 +259,69 @@ export default {
         console.log(error);
         alert('网络错误，不能访问');
     })
+  },
+  watch:{
+    token(){
+      if(this.token!=''){
+        this.$http.defaults.headers.common['Authorization']=this.type+' '+this.token;
+      }
+    }
+  },
+  methods:{
+    onRegister(){
+      console.log('注册');
+      //let param = new URLSearchParams();
+      //param.append("userName", "admin");
+      //param.append("password", "111111");
+
+      let param=qs.stringify({
+        'userName':"wangqian",
+        'password':111111
+      });
+
+      this.$http.post('http://localhost:8080/login/registered',param)
+      .then(response=>{
+        console.log(response);
+      },err=>{
+        console.log("error");
+        console.log(err);
+      })
+    },
+    logIn(){
+      console.log('登录');
+      let vm=this;
+      let param=qs.stringify({
+        'userName':"chendan",
+        'passWord':111111
+      });
+      
+      vm.$http.post('http://localhost:8080/login/login',param)
+      .then(response=>{
+        console.log(response);
+        vm.type=response.data.data.token_type;
+        vm.token=response.data.data.access_token;
+        vm.$http.defaults.headers.common['Authorization']=vm.type+' '+vm.token;
+      },err=>{
+        console.log("error");
+        console.log(err);
+      })
+    },
+    onValid(){
+      let config={
+        Authorization:this.type+' '+this.token
+      }
+      console.log(config);
+      //this.$http.get('http://localhost:8080/test/3',{
+        //headers: config,
+      //})
+      this.$http.get('http://localhost:8080/test/3')
+      .then(response=>{
+        console.log(response);
+      },err=>{
+        console.log("error");
+        console.log(err);
+      })
+    }
   }
 }
 </script>
