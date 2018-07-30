@@ -33,10 +33,10 @@
       </el-aside>
       <el-container>
         <el-header style="text-align: right; font-size: 12px">
-          <el-dropdown>
+          <el-dropdown @command="handleCommand">
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>退出</el-dropdown-item>
+              <el-dropdown-item command="back">退出</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
           <span>快餐收银系统</span>
@@ -87,60 +87,68 @@
               <div class="goods-type">
                 <el-tabs>
                   <el-tab-pane label="汉堡">
-                    <el-col :span="6" v-for="item in type0Goods" :key="item.goodsId">
-                      <el-card :body-style="{ padding: '0px' }" >
-                        <img src="../../assets/hamburger.50e4091.png" class="image">
-                        <div style="padding: 5px">
-                          <span>{{item.goodsName}}</span>
-                          <div class="bottom clearfix">
-                            <time class="time">￥{{item.price}}元</time>
-                            <el-button type="text" class="button" icon="el-icon-star-on"></el-button>
+                    <el-row :gutter="10">
+                      <el-col :span="6" v-for="item in type0Goods" :key="item.goodsId">
+                        <el-card :body-style="{ padding: '0px' }" >
+                          <img src="../../assets/hamburger.50e4091.png" class="image">
+                          <div style="padding: 5px">
+                            <span>{{item.goodsName}}</span>
+                            <div class="bottom clearfix">
+                              <time class="time">￥{{item.price}}元</time>
+                              <el-button type="text" class="button" icon="el-icon-star-on"></el-button>
+                            </div>
                           </div>
-                        </div>
-                      </el-card>
-                    </el-col>
+                        </el-card>
+                      </el-col>
+                    </el-row>
                   </el-tab-pane>
                   <el-tab-pane label="小食">
-                    <el-col :span="6" v-for="item in type1Goods" :key="item.goodsId">
-                      <el-card :body-style="{ padding: '0px' }" >
-                        <img src="../../assets/hamburger.50e4091.png" class="image">
-                        <div style="padding: 5px">
-                          <span>{{item.goodsName}}</span>
-                          <div class="bottom clearfix">
-                            <time class="time">￥{{item.price}}元</time>
-                            <el-button type="text" class="button" icon="el-icon-star-on"></el-button>
+                    <el-row :gutter="10">
+                      <el-col :span="6" v-for="item in type1Goods" :key="item.goodsId">
+                        <el-card :body-style="{ padding: '0px' }" >
+                          <img src="../../assets/hamburger.50e4091.png" class="image">
+                          <div style="padding: 5px">
+                            <span>{{item.goodsName}}</span>
+                            <div class="bottom clearfix">
+                              <time class="time">￥{{item.price}}元</time>
+                              <el-button type="text" class="button" icon="el-icon-star-on"></el-button>
+                            </div>
                           </div>
-                        </div>
-                      </el-card>
-                    </el-col>
+                        </el-card>
+                      </el-col>
+                    </el-row>
                   </el-tab-pane>
                   <el-tab-pane label="饮料">
-                    <el-col :span="6" v-for="item in type2Goods" :key="item.goodsId">
-                      <el-card :body-style="{ padding: '0px' }" >
-                        <img src="../../assets/hamburger.50e4091.png" class="image">
-                        <div style="padding: 5px">
-                          <span>{{item.goodsName}}</span>
-                          <div class="bottom clearfix">
-                            <time class="time">￥{{item.price}}元</time>
-                            <el-button type="text" class="button" icon="el-icon-star-on"></el-button>
+                    <el-row :gutter="10">
+                      <el-col :span="6" v-for="item in type2Goods" :key="item.goodsId">
+                        <el-card :body-style="{ padding: '0px' }" >
+                          <img src="../../assets/hamburger.50e4091.png" class="image">
+                          <div style="padding: 5px">
+                            <span>{{item.goodsName}}</span>
+                            <div class="bottom clearfix">
+                              <time class="time">￥{{item.price}}元</time>
+                              <el-button type="text" class="button" icon="el-icon-star-on"></el-button>
+                            </div>
                           </div>
-                        </div>
-                      </el-card>
-                    </el-col>
+                        </el-card>
+                      </el-col>
+                    </el-row>
                   </el-tab-pane>
                   <el-tab-pane label="套餐">
-                    <el-col :span="6" v-for="item in type3Goods" :key="item.goodsId">
-                      <el-card :body-style="{ padding: '0px' }" >
-                        <img src="../../assets/hamburger.50e4091.png" class="image">
-                        <div style="padding: 5px">
-                          <span>{{item.goodsName}}</span>
-                          <div class="bottom clearfix">
-                            <time class="time">￥{{item.price}}元</time>
-                            <el-button type="text" class="button" icon="el-icon-star-on"></el-button>
+                    <el-row :gutter="10">
+                      <el-col :span="6" v-for="item in type3Goods" :key="item.goodsId">
+                        <el-card :body-style="{ padding: '0px' }" >
+                          <img src="../../assets/hamburger.50e4091.png" class="image">
+                          <div style="padding: 5px">
+                            <span>{{item.goodsName}}</span>
+                            <div class="bottom clearfix">
+                              <time class="time">￥{{item.price}}元</time>
+                              <el-button type="text" class="button" icon="el-icon-star-on"></el-button>
+                            </div>
                           </div>
-                        </div>
-                      </el-card>
-                    </el-col>
+                        </el-card>
+                      </el-col>
+                    </el-row>
                   </el-tab-pane>
                 </el-tabs>
               </div>
@@ -268,11 +276,12 @@ export default {
     }
   },
   methods:{
+    handleCommand(command){
+      if(command=='back'){
+        this.$router.replace('/login');
+      }
+    },
     onRegister(){
-      console.log('注册');
-      //let param = new URLSearchParams();
-      //param.append("userName", "admin");
-      //param.append("password", "111111");
 
       let param=qs.stringify({
         'userName':"wangqian",
@@ -355,6 +364,7 @@ body > .el-container {
   border:1px solid #E5E9F2;
   padding:10px;
   margin-right:5px;
+  margin-bottom: 5px;
   background-color:#fff;
 }
 .o-price{
@@ -399,9 +409,6 @@ body > .el-container {
 .bottom {
   margin-top: 13px;
   line-height: 12px;
-}
-.el-card{
-  width: 180px;
 }
 .button {
   padding: 0;
