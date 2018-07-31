@@ -60,8 +60,6 @@
                   <el-button type="warning" icon="el-icon-edit-outline">挂单</el-button>
                   <el-button type="danger" icon="el-icon-delete" >删除</el-button>
                   <el-button type="success" icon="el-icon-success" >结账</el-button>
-                  <el-button type="default" @click="onRegister">注册</el-button>
-                  <el-button type="default" @click="logIn">登录</el-button>
                   <el-button type="default" @click="onValid">验证登录过期</el-button>
                 </el-row>   
               </el-tab-pane>
@@ -280,40 +278,6 @@ export default {
       if(command=='back'){
         this.$router.replace('/login');
       }
-    },
-    onRegister(){
-
-      let param=qs.stringify({
-        'userName':"wangqian",
-        'password':111111
-      });
-
-      this.$http.post('http://localhost:8080/login/registered',param)
-      .then(response=>{
-        console.log(response);
-      },err=>{
-        console.log("error");
-        console.log(err);
-      })
-    },
-    logIn(){
-      console.log('登录');
-      let vm=this;
-      let param=qs.stringify({
-        'userName':"chendan",
-        'passWord':111111
-      });
-      
-      vm.$http.post('http://localhost:8080/login/login',param)
-      .then(response=>{
-        console.log(response);
-        vm.type=response.data.data.token_type;
-        vm.token=response.data.data.access_token;
-        vm.$http.defaults.headers.common['Authorization']=vm.type+' '+vm.token;
-      },err=>{
-        console.log("error");
-        console.log(err);
-      })
     },
     onValid(){
       let config={

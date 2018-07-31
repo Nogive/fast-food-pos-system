@@ -7,9 +7,16 @@ import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 Vue.use(ElementUI);
 import axios from "axios";
+import qs from "qs";
 axios.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded";
-Vue.prototype.$http = axios;
+Vue.prototype.$axios = axios;
+Vue.prototype.$qs = qs;
+
+import custom from "./assets/js/custom";
+Object.keys(custom).forEach(key => {
+  Vue.prototype["$" + key] = custom[key];
+});
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */

@@ -29,6 +29,9 @@
                 </el-form>
               </el-tab-pane>
               <el-tab-pane label="用户登录" name="loginForm">
+                <div class="login-part">
+                  <img src="@/assets/header.jpg" alt="">
+                </div>
                 <el-form :model="loginForm" status-icon :rules="loginRule" ref="loginForm" label-width="100px">
                   <el-form-item prop="username" label-width="0px">
                     <el-input placeholder="请输入账户名" v-model="loginForm.username">
@@ -55,12 +58,19 @@
 </template>
 <style scoped>
 .login{
-  border: 1px solid red;
   width: 100%;
   background: white;
 }
 .el-input{
   margin-top: 20px;
+}
+.login-part{
+  text-align: center;
+}
+.login-part img{
+  width: 25%;
+  border-radius: 50%;
+  margin: 20px 0 0;
 }
 </style>
 <script>
@@ -156,9 +166,38 @@ export default {
     },
     onRegister(){
       console.log('注册');
+      let vm=this;
+      let param=this.$qs.stringify(this.ruleForm);
+      this.$axios.post('http://localhost:8080/login/registered',param)
+      .then(response=>{
+        this.$confirm('是否前往登录?', '注册成功', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'success'
+        }).then(() => {
+          vm.activeName="loginForm";
+        }).catch(() => {
+          vm.resetForm('ruleForm')         
+        });
+      },err=>{
+        console.log("error");
+        console.log(err);
+      })
     },
     onLogin(){
       console.log('登录');
+      let vm=this;
+      let param=this.$qs.stringify(this.loginForm);
+      vm.$axios.post('http://localhost:8080/login/login',param)
+      .then(response=>{
+        console.log(response);
+        let token=response.data.data.token_type+' '+response.data.data.access_token;
+        vm.$axios.defaults.headers.common['Authorization']=token;
+        vm.$setCookie('token',token);
+      },err=>{
+        console.log("error");
+        console.log(err);
+      })
     },
     ontabs(){
      this.resetForm(this.activeName);
